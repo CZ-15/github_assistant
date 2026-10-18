@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# 虚拟环境
+.venv/
+venv/
+
+# 环境变量和密钥
+.env
+.env.*
+
+# 测试缓存
+.pytest_cache/
+
+# 编辑器配置
+.vscode/
