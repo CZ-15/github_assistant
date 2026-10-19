@@ -1,0 +1,2 @@
+class GithubAssistant:
+    pass

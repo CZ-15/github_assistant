@@ -26,13 +26,16 @@
 ### 备忘录
 - 第一版工具、skill等统一写到services里
 - llm在判断文件是否足够时，可以写个循环
+- token数、读取.gitignore
+- 后续目录扫描可以参考gitingest
 
 ### 进度
 - **已完成：**
-完成了文件加载函数（load（在D:\github-assitant\services\repo_analyzer.py）），定义了RepositoryFile类（在schemas.py里）
+1. 完成了文件加载函数（load（在D:\github-assitant\services\repo_analyzer.py）），定义了RepositoryFile类（在schemas.py里）
+2. 完成了应该过滤的文件的配置
 
 - **正在进行：**
-文件过滤功能编写
+文件扫描功能编写
 
 ## 3. 核心模块
 - GithubAssistant：收集所有skill、属性等，统筹流程

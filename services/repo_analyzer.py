@@ -1,11 +1,31 @@
 from models import schemas
 import json
 from pathlib import Path
-
+from config.should_ignore import (
+    DEFAULT_IGNORED_DIRECTORIES,
+    DEFAULT_IGNORED_FILES,
+    DEFAULT_IGNORED_SUFFIXES,
+)
 
 class RepoAnalyzer:
-    def scan_tree(self, repository_path: str) -> 
+    def file_ignore(path: Path) -> bool:  ## path是文件或者文件夹的路径
+        if path.is_dir() and path.name in DEFAULT_IGNORED_DIRECTORIES:
+            return True
 
+        if path.is_file() and path.name in DEFAULT_IGNORED_FILES:
+            return True
+
+        if path.is_file() and path.suffix.lower() in DEFAULT_IGNORED_SUFFIXES:
+            return True
+
+        return False
+
+
+    def scan_tree(self, repository_path: str) -> schemas.FileBase:  ## 仓库的扫描
+        pass
+        
+
+        
     def load(self, repository_path: str) -> list[schemas.RepositoryFile]:  ## 仓库的读取
         repository_files = []  
 
