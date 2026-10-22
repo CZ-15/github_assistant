@@ -1,5 +1,4 @@
 from models import schemas
-import json
 from pathlib import Path
 
 
@@ -29,20 +28,19 @@ class RepoAnalyzer:
         
     def file_load(self, repo_path: str) -> list[schemas.RepositoryFile]:  ## 仓库的读取
         repository_files = []  
+        file_path = Path(repo_path).resolve()
 
-        repositoryfile = schemas.RepositoryFile(path=repo_path, content="", line_count=0)  ## ## 创建一个RepositoryFile对象，初始化路径、内容和行数
-        file_path = Path(repositoryfile.path).resolve()  ## 转为Path对象
+        if not file_path.exists():
+            raise FileNotFoundError(f"Repository path '{repo_path}' does not exist.")
 
-        """json文件传化为python"""
-        with open(file_path, "r", encoding = "UTF-8") as f:
-            if file_path.is_file() and file_path.suffix.lower() == ".json":
-                repositoryfile.content = json.load(f)
-                repositoryfile.line_count = len(file_path.read_text(encoding="utf-8").splitlines())
+        if not file_path.is_file():
+            raise IsADirectoryError(f"Repository path '{repo_path}' is not a file.")
 
-            else:  ## python文件读取
-                for line in f:
-                    repositoryfile.content += line
-                    repositoryfile.line_count += 1
+        content = file_path.read_text(encoding="utf-8")
+        line_count = len(content.splitlines())
+        path = str(file_path)
+        repositoryfile = schemas.RepositoryFile(path=path, content=content, line_count=line_count)
+        
         repository_files.append(repositoryfile)
         return repository_files  ## 暂时不确定
 
