@@ -1,5 +1,6 @@
 from models import schemas
 from pathlib import Path
+import os
 
 
 class RepoAnalyzer:
@@ -22,8 +23,49 @@ class RepoAnalyzer:
 
 
     def scan_tree(self, repository_path: str) -> list[schemas.FileBase]:  ## 仓库的扫描
-        pass
-        
+        root = Path(repository_path).resolve()
+
+        if not root.exists():
+            raise FileNotFoundError(f"Repository path '{repository_path}' does not exist.")
+        if not root.is_dir():
+            raise NotADirectoryError(f"Repository path '{repository_path}' is not a directory.")
+
+        files_tree: list[schemas.FileBase] = []
+
+        for current_dir, dir_names, file_name in os.walk(
+            root,
+            topdown=True,
+            followlinks=False,
+        ):
+            current_path = Path(current_dir)
+            dir_names[:] = sorted(
+                name
+                for name in dir_names
+                if not self.file_ignore(current_path / name)
+                and not (current_path / name).is_symlink()   
+            )
+
+            for file in sorted(file_name):
+                file_path = current_path / file
+                
+                if self.file_ignore(file_path) or file_path.is_symlink():
+                    continue
+
+                try:
+                    size = file_path.stat().st_size
+                except OSError:
+                    print(f"Warning: Could not access file '{file_path}'. Skipping.")
+                    continue
+
+                files_tree.append(
+                    schemas.FileBase(
+                        relative_path=str(file_path.relative_to(root).as_posix()),
+                        suffix=file_path.suffix,
+                        size=size,  
+                    )
+                )
+
+        return files_tree
 
         
     def file_load(self, repo_path: str) -> list[schemas.RepositoryFile]:  ## 仓库的读取

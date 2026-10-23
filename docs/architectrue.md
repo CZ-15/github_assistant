@@ -33,10 +33,11 @@
 ### 进度
 - **已完成：**
 1. 完成了文件加载函数（load（在D:\github-assitant\services\repo_analyzer.py）），定义了RepositoryFile类（在schemas.py里）
-2. 完成了应该过滤的文件的配置
+2. 完成了应该过滤的文件的配置与其测试
+3. 完成了目录树扫描功能与其测试
 
 - **正在进行：**
-文件扫描功能编写
+
 
 ## 3. 核心模块
 - GithubAssistant：收集所有skill、属性等，统筹流程

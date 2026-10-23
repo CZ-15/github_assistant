@@ -17,8 +17,8 @@ class Config:
         })
 
         self.DEFAULT_IGNORED_FILES = frozenset({
-            ".DS_Store",
-            "Thumbs.db",
+            ".DS_Store",  ## macOS系统下的隐藏文件
+            "Thumbs.db",  ## Windows系统下的缩略图缓存文件
         })
 
         self.DEFAULT_IGNORED_SUFFIXES = frozenset({
