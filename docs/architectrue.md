@@ -29,15 +29,21 @@
 - token数、读取.gitignore
 - 后续目录扫描可以参考gitingest、增加用户自己添加应该忽略文件的功能
 - 推荐让用户在创建配置时传入额外规则，避免代码运行到一半时配置突然改变
+- Prompt 不一定只是某段固定的文字，也可以是随着任务进展不断追加的消息列表
+- 可以用YAML文件写用户自己额外添加的配置
+- 可以考虑模型调用费用的限制，放到yaml中
+- 考虑采用observation_template来设计文件内容长度控制
+- 可参考路线：Model 检查 → Jinja2 生成纠错 Prompt → Agent 加入 messages → LLM 下一轮尝试修正
+- 可以在消息里增加extra模块，作为保存 Agent 内部处理和调度所需要的附加信息，而不是直接提供给 LLM 的对话内容，在真正把消息交给模型时去除就好了
 
 ### 进度
 - **已完成：**
-1. 完成了文件加载函数（load（在D:\github-assitant\services\repo_analyzer.py）），定义了RepositoryFile类（在schemas.py里）
+1. 完成了文件加载函数（load（在D:\github-assitant\services\repo_analyzer.py）），定义了RepositoryFile类（在schemas.py里）及其测试
 2. 完成了应该过滤的文件的配置与其测试
 3. 完成了目录树扫描功能与其测试
 
 - **正在进行：**
-
+1.配置设计
 
 ## 3. 核心模块
 - GithubAssistant：收集所有skill、属性等，统筹流程
@@ -60,5 +66,4 @@
 -> LLMProvider
 -> 生成答案
 
-## 5. 目录树
 

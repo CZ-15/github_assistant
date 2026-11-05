@@ -1,0 +1,18 @@
+user_ignored:
+  directories: {{user_ignored_directories}}
+  files: {{user_ignored_files}}
+  suffixes: {{user_ignored_suffixes}}
+
+agent:
+  cost_limit: {{user_cost_limit}}
+  step_limit: {{user_step_limit}}
+  max_retries: {{user_max_retries}}
+  timeout: {{user_timeout}}
+  max_consecutive_errors: {{user_max_consecutive_errors}}
+  temperature: {{user_temperature}}
+
+model:
+  provider: {{model_provider}}
+  model_name: {{model_name}}
+  temperature: {{model_temperature}}
+

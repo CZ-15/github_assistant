@@ -1,4 +1,4 @@
-from config.config import Config
+from config.default import Config
 from services.repo_analyzer import RepoAnalyzer
 
 

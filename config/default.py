@@ -44,4 +44,10 @@ class Config:
             ".doc",
             ".docx",
         })
-    
+
+        self.cost_limit = 3
+        self.step_limit = 20
+        self.max_retries = 2
+        self.timeout = 300
+        self.max_consecutive_errors = 3
+        self.temperature = 0
