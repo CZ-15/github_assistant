@@ -50,4 +50,7 @@ class Config:
         self.max_retries = 2
         self.timeout = 300
         self.max_consecutive_errors = 3
-        self.temperature = 0
+
+        self.model_name = "Qwen3.8-Flash"
+        self.model_provider = "dashscope"
+        self.model_temperature = 0

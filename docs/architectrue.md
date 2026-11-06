@@ -41,9 +41,10 @@
 1. 完成了文件加载函数（load（在D:\github-assitant\services\repo_analyzer.py）），定义了RepositoryFile类（在schemas.py里）及其测试
 2. 完成了应该过滤的文件的配置与其测试
 3. 完成了目录树扫描功能与其测试
+4. 将默认配置统一格式
 
 - **正在进行：**
-1.配置设计
+1.配置设计(更改自定义配置的格式（yaml文件里）、读取yaml准备渲染)
 
 ## 3. 核心模块
 - GithubAssistant：收集所有skill、属性等，统筹流程
