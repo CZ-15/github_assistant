@@ -7,7 +7,7 @@ agent:
   cost_limit: {{user_cost_limit}}
   step_limit: {{user_step_limit}}
   max_retries: {{user_max_retries}}
-  time_out: {{user_timeout}}
+  timeout: {{user_timeout}}
   max_consecutive_errors: {{user_max_consecutive_errors}}
 
 model:
