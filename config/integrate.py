@@ -6,6 +6,8 @@ from config.default import Config as DefaultConfig
 from jinja2 import Environment, StrictUndefined
 from pathlib import Path
 import yaml
+from copy import deepcopy
+from typing import Any
 
 
 def load_default_config() -> dict:
@@ -62,7 +64,50 @@ def user_text_load(rendered_text: str) -> dict:
     return user_config
 
 
-def merge(user: dict, default: dict):
-    pass
+def merge(user: dict, default: dict) -> dict:
+    '''
+    先深拷贝一个result，然后在result上进行修改。采用反复调用的方法从内到外进行修改
+    '''
+    result = deepcopy(default)
+
+    for user_key, user_value in user.items():
+        if user_value is None:
+            continue
+
+        default_value = result.get(user_key)
+
+        if (
+            isinstance(default_value, dict)
+            and isinstance(user_value, dict)
+        ):
+            result[user_key] = merge(user_value, default_value)
+        else:
+            result[user_key] = deepcopy(user_value)
+
+    return result
+
+
+def specific_merge(default: dict, user: dict) -> dict:
+    result = merge(user, default)
+
+    ignored_default = default.get("ignored", {})
+    ignored_user = user.get("ignored", {})
+
+    if ignored_user is None:
+        ignored_user = {}
+
+    for key in ["directories", "files", "suffixes"]:
+        default_values = ignored_default.get(key) or []
+        user_values = ignored_user.get(key) or []
+
+        result["ignored"][key] = (
+            frozenset(default_values)
+            | frozenset(user_values)
+        )
+
+    return result
+    
+    
+
 
     
