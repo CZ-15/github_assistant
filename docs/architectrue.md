@@ -45,9 +45,11 @@
 5. 自定义配置文件格式也已统一
 6. 读取并渲染自定义配置然后返回
 7. 完成自定义配置转为字典对象
+8. 完成test_load_default_config、render_user_config和user_text_load函数测试
 
 - **正在进行：**
-1.配置设计(合并默认配置与自定义配置)
+1. 配置设计(函数测试)
+2. 通过.env,example设置模型api然后读取
 
 ## 3. 核心模块
 - GithubAssistant：收集所有skill、属性等，统筹流程

@@ -34,7 +34,7 @@ def load_default_config() -> dict:
     }
 
 
-def render_user_config(user_path: str, template_values: dict) -> str:
+def render_user_config(user_path: str, template_values: dict) -> str:  # 渲染返回用户自定义配置
     user_path = Path(user_path)
     template_text = user_path.read_text(encoding = "utf-8")
 
@@ -50,7 +50,7 @@ def render_user_config(user_path: str, template_values: dict) -> str:
     return rendered_text
 
 
-def user_text_load(rendered_text: str) -> dict:
+def user_text_load(rendered_text: str) -> dict:  # 转为python对象
     user_config = yaml.safe_load(rendered_text)
 
     if user_config is None:
@@ -106,7 +106,39 @@ def specific_merge(default: dict, user: dict) -> dict:
         )
 
     return result
-    
+
+
+class AppConfig:
+    def __init__(self, config_data: dict[str, Any]) -> dict:
+        self._data = deepcopy(config_data)
+
+        agent = self._data["aegnt"]
+        model = self._data["model"]
+        ignored = self._data["ignored"]
+
+        self.IGNORED_DIRECTORIES = ignored["directories"]
+        self.IGNORED_FILES = ignored["files"]
+        self.IGNORED_SUFFIXES = ignored["suffixes"]
+
+        self.cost_limit = agent["cost_limit"]
+        self.step_limit = agent["step_limit"]
+        self.max_retries = agent["max_retries"]
+        self.timeout = agent["timeout"]
+        self.max_consecutive_errors = (
+            agent["max_consecutive_errors"]
+        )
+
+        self.model_name = model["name"]
+        self.model_provider = model["provider"]
+        self.model_temperature = (
+            model["temperature"]
+        )
+
+
+    @property
+    def data(self) -> dict[str, Any]:
+        return deepcopy(self._data)
+
     
 
 
