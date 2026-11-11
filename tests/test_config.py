@@ -69,3 +69,55 @@ model:
     }
 
 
+def test_merge():
+    default = {
+        "ignored": {
+            "directories": frozenset({".git",}),
+            "files": frozenset({".DS_Store",}),
+            "suffixes": frozenset({"archive.7z",}),
+        },
+        "agent" : {
+            "cost_limit" : 5,
+            "step_limit" : 3,
+            "max_retries" : 10,
+            "timeout" : 100,
+            "max_consecutive_errors" : 2,
+        },
+            "model" : {
+            "name" : "deepseek",
+            "provider" : "深度求索",
+            "temperature" : 3
+                }
+    }
+    user = {
+        "agent": {
+            "step_limit" : 15,
+            "max_consecutive_errors" : 6,
+        },
+        "model": {
+            "name" : "Qwen",
+        },
+        "ignored": {
+            "directories": [".vscode"],
+                },
+    }
+    result = specific_merge(default, user)
+    assert result == {
+        "ignored": {
+            "directories": frozenset({".git", ".vscode"}),
+            "files": frozenset({".DS_Store"}),
+            "suffixes": frozenset({"archive.7z"}),
+        },
+        "agent" : {
+            "cost_limit" : 5,
+            "step_limit" : 15,
+            "max_retries" : 10,
+            "timeout" : 100,
+            "max_consecutive_errors" : 6,
+        },
+            "model" : {
+            "name" : "Qwen",
+            "provider" : "深度求索",
+            "temperature" : 3
+        }
+    }

@@ -1,17 +1,17 @@
 ignored:
-  directories: {{user_ignored_directories}}
-  files: {{user_ignored_files}}
-  suffixes: {{user_ignored_suffixes}}
+  directories: {{ user_ignored_directories | default(none) | tojson }}
+  files: {{ user_ignored_files | default(none) | tojson }}
+  suffixes: {{ user_ignored_suffixes | default(none) | tojson }}
 
 agent:
-  cost_limit: {{user_cost_limit}}
-  step_limit: {{user_step_limit}}
-  max_retries: {{user_max_retries}}
-  timeout: {{user_timeout}}
-  max_consecutive_errors: {{user_max_consecutive_errors}}
+  cost_limit: {{ user_cost_limit | default(none) | tojson }}
+  step_limit: {{ user_step_limit | default(none) | tojson }}
+  max_retries: {{ user_max_retries | default(none) | tojson }}
+  timeout: {{ user_timeout | default(none) | tojson }}
+  max_consecutive_errors: {{ user_max_consecutive_errors | default(none) | tojson }}
 
 model:
-  name: {{model_name}}
-  provider: {{model_provider}}
-  temperature: {{model_temperature}}
+  name: {{ model_name | default(none) | tojson }}
+  provider: {{ model_provider | default(none) | tojson }}
+  temperature: {{ model_temperature | default(none) | tojson }}
 
